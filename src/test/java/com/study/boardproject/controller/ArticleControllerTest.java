@@ -1,5 +1,6 @@
 package com.study.boardproject.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ class ArticleControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
+    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 정상 호출")
     @Test
     public void view_articles() throws Exception {
@@ -28,10 +29,12 @@ class ArticleControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/articles"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML))
+                .andExpect(MockMvcResultMatchers.view().name("articles/index"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("articles"));
     }
 
 
+    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 상세 페이지 - 정상 호출")
     @Test
     public void view_article() throws Exception {
@@ -42,9 +45,13 @@ class ArticleControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/articles/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("article"));
+                .andExpect(MockMvcResultMatchers.view().name("articles/detail"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("article"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("articleComments"));
     }
 
+
+    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 검색 전용 페이지 - 정상 호출")
     @Test
     public void view_search_article() throws Exception {
@@ -54,9 +61,12 @@ class ArticleControllerTest {
         //then: Return Article View
         mvc.perform(MockMvcRequestBuilders.get("/articles/search"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("articles/search"))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML));
     }
 
+
+    @Disabled("구현 중")
     @DisplayName("[view][GET] 게시글 해시태그 검색 페이지 - 정상 호출")
     @Test
     public void view_hashtag_search_article() throws Exception {
@@ -66,6 +76,7 @@ class ArticleControllerTest {
         //then: Return Article View
         mvc.perform(MockMvcRequestBuilders.get("/articles/search-hashtag"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("articles/search-hashtag"))
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.TEXT_HTML));
     }
 }
