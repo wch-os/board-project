@@ -2,6 +2,7 @@ package com.study.boardproject.repository;
 
 import com.study.boardproject.config.JpaConfig;
 import com.study.boardproject.domain.Article;
+import com.study.boardproject.domain.UserAccount;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class JpaRepositoryTest {
     @Autowired
     private ArticleCommentRepository articleCommentRepository;
 
+    @Autowired
+    private UserAccountRepository userAccountRepository;
+
     @DisplayName("select 테스트")
     @Test
     void givenTestData_whenSelecting_thenWorksFine() {
@@ -44,9 +48,11 @@ class JpaRepositoryTest {
     @DisplayName("insert 테스트")
     @Test
     void givenTestData_whenInserting_thenWorksFine() {
+        UserAccount userAccount = userAccountRepository.save(UserAccount.of("sun", "pw", "gmail", null, null));
+
         //given
         long previousCount = articleRepository.count();
-        Article article = Article.of("new article", "new content", "#spring");
+        Article article = Article.of(userAccount, "new article", "new content", "#spring");
 
         //when
         articleRepository.save(article);
