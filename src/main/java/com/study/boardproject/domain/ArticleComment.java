@@ -20,21 +20,20 @@ import java.util.Objects;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy"),
 })
-@EntityListeners(AuditingEntityListener.class)
-public class ArticleComment {
+public class ArticleComment extends AuditingFields{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // optional = false : 관계를 맺고 있는 엔티티 객체가 반드시 존재해야 한다.
-    @Setter @ManyToOne(optional = false) private Article article; // 게시글 (ID)
+    @Setter @ManyToOne(optional = false)
+    private Article article; // 게시글 (ID)
 
-    @Setter @Column(nullable = false, length = 500) private String content; // 내용
+    @Setter @ManyToOne(optional = false)
+    private UserAccount userAccount;
 
-
-    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
-    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
+    @Setter @Column(nullable = false, length = 500)
+    private String content; // 내용
 
 
     private ArticleComment(Article article, String content) {
